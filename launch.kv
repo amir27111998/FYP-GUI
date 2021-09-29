@@ -1,0 +1,380 @@
+#: import icon kivysome.icon
+
+<AppNavigator>:
+    StartWindow
+    ModulesWindow
+    SettingWindow
+
+<StartWindow>:
+    project_lbl: _project_lbl
+    start_button: _start_button
+    name: 'start-screen'
+    canvas:
+        Rectangle:
+            source:'images/background.png'
+            size: self.size
+            pos: self.pos
+    RelativeLayout:
+        AnchorLayout:
+            anchor_x:'center'
+            anchor_y:'center'
+            StartButton:
+                id: _start_button
+                markup: True
+                text:'Start Project     %s' % icon('arrow-right', 20, 'ffff00')
+                size_hint: None, None
+                size: (260.0, 70.0)
+                font_size: 20
+                font_name: 'fonts\BRLNSDB'
+                on_press: root.animate_button()
+                radius: [40]
+        Label:
+            id: _project_lbl
+            text:'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. \n et blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti.'
+            pos: '0dp', '-150dp'
+            halign: 'center'
+            do_layout: root.animate()
+        Image:
+            source: 'images/carla-logo.png'
+            pos: '0dp','180dp'
+        
+
+
+<ModulesWindow>:
+    setting_button: _setting_button
+    name: 'modules-screen'
+    RelativeLayout:
+        canvas.before:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: 'images/background.png'
+        
+        AnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'top'
+            BackButton:
+                markup: True
+                text:'%s   Back' % icon('chevron-left', 16 , 'ffffff')
+                font_size: 16
+                color: (1,1,1,1)
+                size_hint: None, None 
+                size: '150dp','50dp'
+                radius: [0, 30, 30, 0]
+                on_press: root.back()
+        
+        AnchorLayout:
+            anchor_x: 'right'
+            anchor_y: 'bottom'
+            pos: -30, 30.2
+            SettingButton:
+                id: _setting_button
+                markup: True
+                text:'%s' % icon('cogs', 26 , 'ffffff')
+                font_size: 24
+                size_hint: None, None 
+                size: '60dp','60dp'
+                radius: [50]
+                on_press: root.setting_animate()
+        
+        GridLayout:
+            cols: 3
+            AnchorLayout:
+                anchor_y: 'center'
+                anchor_x: 'center'
+                padding: 30
+                FloatLayout:
+                    size_hint: 1, 0.35
+                    canvas.before:
+                        Color:
+                            rgba: (0, 0, 0, 1)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Image:
+                        # size_hint: 1.1, 0.47
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.68}
+                        source: 'images/mode-1.jpg'
+                    
+                    Button:
+                        markup: True
+                        size_hint: 1, 0.34
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.17}
+                        font_size: 18
+                        text:'%s  Realtime Mode' % icon('stopwatch', 17, 'ffff00')
+                        font_name: 'fonts\BRLNSDB'
+                        background_color:(0,0,0,0)
+                    
+                    
+                    
+                
+            AnchorLayout:
+                anchor_y: 'center'
+                anchor_x: 'center'
+                padding: 30
+                FloatLayout:
+                    size_hint: 1, 0.35
+                    canvas.before:
+                        Color:
+                            rgba: (0, 0, 0, 1)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Image:
+                        # size_hint: 1.1, 0.47
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.68}
+                        source: 'images/mode-2.png'
+                    
+                    Button:
+                        markup: True
+                        size_hint: 1, 0.34
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.17}
+                        font_size: 18
+                        text:'%s  Video Mode' % icon('play-circle', 17, 'ffff00')
+                        font_name: 'fonts\BRLNSDB'
+                        background_color:(0,0,0,0)
+
+            AnchorLayout:
+                anchor_y: 'center'
+                anchor_x: 'center'
+                padding: 30
+                FloatLayout:
+                    size_hint: 1, 0.35
+                    canvas.before:
+                        Color:
+                            rgba: (0, 0, 0, 1)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Image:
+                        # size_hint: 1.1, 0.47
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.68}
+                        source: 'images/mode-3.jpg'
+                    
+                    Button:
+                        markup: True
+                        size_hint: 1, 0.34
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.17}
+                        font_size: 18
+                        text:'%s  Research Work' % icon('user-graduate', 17, 'ffff00')
+                        font_name: 'fonts\BRLNSDB'
+                        background_color:(0,0,0,0)
+
+
+
+
+<SettingWindow>:
+    host: _host
+    port: _port
+    rendering_mode: _rendering_mode
+    timer: _timer
+    record: _record
+    save_button: _save
+    font: 'fonts\BRLNSDB'
+    name: 'settings-screen'
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Rectangle:
+                pos:self.pos
+                size:self.size
+                source: 'images/background.png'
+        
+        AnchorLayout:
+            anchor_x: 'left'
+            anchor_y: 'top'
+            size_hint_y: None
+            size: ('200dp', '150dp')
+            StackLayout:
+                orientation: 'lr-tb'
+                BackButton2:
+                    markup: True
+                    text:'%s   Back' % icon('chevron-left', 16 , 'ffffff')
+                    font_size: 16
+                    color: (1,1,1,1)
+                    size_hint: None, None 
+                    size: '150dp','50dp'
+                    radius: [0, 30, 30, 0]
+                    on_press: root.back()
+                Label:
+                    text:'Settings'
+                    font_name: root.font
+                    font_size: 40
+                    color: (0,0,0,1)
+                    size_hint:(0.2, 0.4)
+        GridLayout:
+            rows: 10
+            padding: ('50dp', '50dp', '50dp', '50dp')
+            size_hint_x: 0.6
+            pos_hint: {'center_x': 0.5}
+            canvas.before:
+                Color:
+                    rgba:(1,1,1,0.3)
+                RoundedRectangle:
+                    pos:self.pos
+                    size:self.size
+                    radius: [30]
+            StackLayout:
+                orientation: 'lr-tb'
+                size_hint: (1, None)
+                height: 50
+                Label:
+                    text: 'Host'
+                    size_hint: (None, None)
+                    height: 30
+                    width: 200
+                    font_name: root.font
+                TextInput:
+                    id: _host
+                    text:'localhost'
+                    size_hint: (.5, None)
+                    height: 30
+                    multiline: False
+                    font_name: root.font
+            StackLayout:
+                orientation: 'lr-tb'
+                size_hint: (1, None)
+                height: 50
+                Label:
+                    text: 'Port'
+                    size_hint: (None, None)
+                    height: 30
+                    width: 200
+                    font_name: root.font
+                TextInput:
+                    id: _port
+                    text:'2000'
+                    size_hint: (.5, None)
+                    height: 30
+                    multiline: False
+                    font_name: root.font
+            StackLayout:
+                orientation: 'lr-tb'
+                size_hint: (1, None)
+                height: 50
+                Label:
+                    text: 'Rendering Mode'
+                    size_hint: (None, None)
+                    height: 30
+                    width: 283
+                    font_name: root.font
+                Switch:
+                    id : _rendering_mode
+                    size_hint: (None, None)
+                    height: 30
+                    width: 100
+            StackLayout:
+                orientation: 'lr-tb'
+                size_hint: (1, None)
+                height: 50
+                Label:
+                    text: 'Timer'
+                    size_hint: (None, None)
+                    height: 30
+                    width: 210
+                    font_name: root.font
+                Slider:
+                    id : _timer
+                    size_hint: (None, None)
+                    min: 100
+                    max: 1000
+                    value: 500
+                    height: 30
+                    width: 240
+                Label:
+                    text: str(int(_timer.value))
+                    font_name: root.font
+                    font_size: 25
+                    color: (1,1,1,1)
+                    size_hint: (None, None)
+                    height: 30
+                    width: 65
+
+            StackLayout:
+                orientation: 'lr-tb'
+                size_hint: (1, None)
+                height: 50
+                Label:
+                    text: 'Recording'
+                    size_hint: (None, None)
+                    height: 30
+                    width: 240
+                    font_name: root.font
+                Switch:
+                    id : _record
+                    size_hint: (None, None)
+                    height: 30
+                    width: 186
+                
+            RelativeLayout:
+                SaveSettingButton:
+                    id: _save 
+                    text: "Save Settings"
+                    font_name: root.font
+                    font_size: 22
+                    size_hint: 0.35, 0.4
+                    radius: [30]
+                    pos_hint: {'center_x':0.5 , 'center_y': 0.25}
+                    on_press: root.animate_button()
+                
+
+
+        RelativeLayout:
+            size_hint_y: 0.3
+
+
+
+# Custom Widtget
+<StartButton@Button>
+    background_color: (0,0,0,0)
+    radius: [0,0,0,0]
+    canvas.before:
+        Color: 
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.radius
+<SettingButton@Button>
+    background_color: (0,0,0,0)
+    radius: [0,0,0,0]
+    canvas.before:
+        Color: 
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.radius
+
+<BackButton@Button>
+    background_color: (0,0,0,0)
+    radius: [0,0,0,0]
+    canvas.before:
+        Color: 
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.radius
+
+<BackButton2@Button>
+    background_color: (0,0,0,0)
+    radius: [0,0,0,0]
+    canvas.before:
+        Color: 
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.radius
+
+<SaveSettingButton@Button>
+    background_color: (0,0,0,0)
+    radius: [0,0,0,0]
+    canvas.before:
+        Color: 
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.radius

@@ -1,0 +1,28 @@
+<Wrapper>:
+    TitleScreen
+    ModuleScreen
+<TitleScreen@AnchorLayout>:
+    anchor_x: 'center'
+    anchor_y: 'center'
+    Button:
+        text:'Hello World'
+        size_hint:(0.2, 0.1)
+        background_color: (240, 10, 0, 0.5)
+
+<ModuleScreen>:
+    anchor_x: 'center'
+    anchor_y: 'center'
+    Button:
+        text:'Hello World'
+        size_hint:(0.2, 0.1)
+        background_color: (0, 0, 250, 1)
+        on_press: root.on_pre()
+    BoxLayout:
+        Button:
+            text:'A'
+            size_hint:(0.2, 0.1)
+            background_color: (0, 0, 250, 1)
+        Button:
+            text:'B'
+            size_hint:(0.2, 0.1)
+            background_color: (0, 0, 250, 1)
