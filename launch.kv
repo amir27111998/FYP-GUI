@@ -4,6 +4,8 @@
     StartWindow
     ModulesWindow
     SettingWindow
+    ResearchWindow
+    VideoMode
 
 <StartWindow>:
     project_lbl: _project_lbl
@@ -133,6 +135,7 @@
                         text:'%s  Video Mode' % icon('play-circle', 17, 'ffff00')
                         font_name: 'fonts\BRLNSDB'
                         background_color:(0,0,0,0)
+                        on_press: root.video_window()
 
             AnchorLayout:
                 anchor_y: 'center'
@@ -159,6 +162,7 @@
                         text:'%s  Research Work' % icon('user-graduate', 17, 'ffff00')
                         font_name: 'fonts\BRLNSDB'
                         background_color:(0,0,0,0)
+                        on_press: root.research_window()
 
 
 
@@ -172,6 +176,7 @@
     save_button: _save
     font: 'fonts\BRLNSDB'
     name: 'settings-screen'
+    on_enter: root.init_settings()
     BoxLayout:
         orientation: 'vertical'
         canvas.before:
@@ -280,11 +285,11 @@
                     max: 1000
                     value: 500
                     height: 30
-                    width: 240
+                    width: 210
                 Label:
                     text: str(int(_timer.value))
                     font_name: root.font
-                    font_size: 25
+                    font_size: 20
                     color: (1,1,1,1)
                     size_hint: (None, None)
                     height: 30
@@ -312,19 +317,379 @@
                     text: "Save Settings"
                     font_name: root.font
                     font_size: 22
-                    size_hint: 0.35, 0.4
+                    size_hint: 0.35, 0.7
                     radius: [30]
-                    pos_hint: {'center_x':0.5 , 'center_y': 0.25}
+                    pos_hint: {'center_x':0.5 , 'center_y': 0.2}
                     on_press: root.animate_button()
                 
 
 
         RelativeLayout:
-            size_hint_y: 0.3
+            size_hint_y: 0.2
+
+<ResearchWindow>:
+    name: 'research-screen'
+    font: 'fonts\BRLNSDB'
+    RelativeLayout:
+        canvas.before:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: 'images/background.png'
+        
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+
+            RelativeLayout:
+                
+                
+                size_hint: (1, None)
+                height:1500
+                
+                AnchorLayout:
+                    anchor_x: 'left'
+                    anchor_y: 'top'
+                    BackButton3:
+                        markup: True
+                        on_press: root.back()
+                        text:'%s   Back' % icon('chevron-left', 16 , 'ffffff')
+                        font_size: 16
+                        color: (1,1,1,1)
+                        size_hint: None, None 
+                        size: '150dp','50dp'
+                        radius: [0, 30, 30, 0]
+                
+                GridLayout:
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,0.3)
+                        RoundedRectangle:
+                            radius:[20]
+                            size: self.size
+                            pos: self.pos
+                    rows:1
+                    cols:2
+                    size_hint: (0.8, None)
+                    height:250
+                    pos_hint: {'x': 0.1, 'y' : 0.78}
+                    padding: ('50dp', '50dp', '50dp', '50dp')
+                    BoxLayout:
+                        orientation: 'vertical'
+                        Label:
+                            text:'U-Net'
+                            font_size: 20
+                            text_size: self.size
+                            font_name: root.font
+                            valign: 'top'
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 30
+                        Label:
+                            text:'We have taken the road samples as a dataset and then started to use MATLAB to separate out road from the image which was our region of interest. We got to know that we cannot perform this task from simple segmentation because the sample we took were in different varieties so there was a high chance of misjudging the road. So after that we shifted our approach to deep learning models in order to find the ROI. We started using U-NET Model as our first approach. It was based on a encoder’s decoders architecture of CNN.\nWe have modified the U-NET architecture such as it takes the input image of size 1280x720 and output the same dimension image containing the mask on the road.'
+                            text_size: self.size
+                            valign: 'top'
+                            font_size: 12
+                            font_name: root.font
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 180
+                        
+                    Image:
+                        # size_hint: (0.8, 0.2) 
+                        source:'images/u-net.jpeg'
+                        size_hint: 1, None
+                        height: 170
+
+                GridLayout:
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,0.3)
+                        RoundedRectangle:
+                            radius:[20]
+                            size: self.size
+                            pos: self.pos
+                    rows:1
+                    cols:2
+                    size_hint: (0.8, None)
+                    height:250
+                    pos_hint: {'x': 0.1, 'y' :0.6}
+                    padding: ('50dp', '50dp', '50dp', '50dp')
+                    BoxLayout:
+                        orientation: 'vertical'
+                        Label:
+                            text:'Mask RCNN'
+                            font_size: 20
+                            text_size: self.size
+                            font_name: root.font
+                            valign: 'top'
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 30
+                        Label:
+                            text:'Mask RCNN is a deep neural network intended to tackle instance segmentation issue in ML or Computer vision. All in all, it can isolate various items in a picture or a video. You give it a picture, it gives you the item bounding boxes, classes and masks. There are two phases of Mask RCNN. To start with, it produces recommendations about the regions where there may be an item dependent on the image. Second, it predicts the class of the item, refines the bounding box and creates a pixel level mask of the object dependent on the initial stage. The two phases are associated with the backbone structure.'
+                            text_size: self.size
+                            font_name: root.font
+                            valign: 'top'
+                            halign: 'left'
+                            font_size: 12
+                            size_hint: 1, None
+                            height: 180
+                        
+                    Image:
+                        # size_hint: (0.8, 0.2) 
+                        source:'images/mask-rcnn.jpg'
+                        size_hint: 1, None
+                        height: 170
+
+                GridLayout:
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,0.3)
+                        RoundedRectangle:
+                            radius:[20]
+                            size: self.size
+                            pos: self.pos
+                    rows:1
+                    cols:2
+                    size_hint: (0.8, None)
+                    height:250
+                    pos_hint: {'x': 0.1, 'y' :0.4}
+                    padding: ('50dp', '50dp', '50dp', '50dp')
+                    BoxLayout:
+                        orientation: 'vertical'
+                        Label:
+                            text:'YOLACT'
+                            font_size: 20
+                            font_name: root.font
+                            text_size: self.size
+                            valign: 'top'
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 30
+                        Label:
+                            text:'YOLACT addresses the problem of instance segmentation is by breaking the task into two smaller tasks that run in parallel: generating a dictionary of prototype masks and predicting a set of linear combination coefficients per instance. In this way, the method implicitly learns to localize the instance masks and therefore it is able to skip the localization step that is very common in instance segmentation methods.'
+                            text_size: self.size
+                            font_name: root.font
+                            font_size: 12
+                            valign: 'top'
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 140
+                        
+                    Image:
+                        # size_hint: (0.8, 0.2) 
+                        source:'images/yolact.jpg'
+                        size_hint: 1, None
+                        height: 170
+                    
+                GridLayout:
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,0.3)
+                        RoundedRectangle:
+                            radius:[20]
+                            size: self.size
+                            pos: self.pos
+                    rows:1
+                    cols:2
+                    size_hint: (0.8, None)
+                    height:250
+                    pos_hint: {'x': 0.1, 'y' :0.2}
+                    padding: ('50dp', '50dp', '50dp', '50dp')
+                    BoxLayout:
+                        orientation: 'vertical'
+                        Label:
+                            text:'Dataset Labeling'
+                            font_size: 20
+                            text_size: self.size
+                            font_name: root.font
+                            valign: 'top'
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 30
+                        Label:
+                            text:'The action of annotating a text or diagram, here we have annotated road data to make our machine or algorithm learn the "REGION OF INTEREST", obviously we human beings can differentiate by just a gaze but machine needs the whole algorithm and at the backend algorithm needs data. We have used CVAT as a labeling tool and drew the mask on the set of images we had taken from road.'
+                            text_size: self.size
+                            font_name: root.font
+                            font_size: 12
+                            valign: 'top'
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 140
+                        
+                    Image:
+                        # size_hint: (0.8, 0.2) 
+                        source:'images/labelling.jpg'
+                        size_hint: 1, None
+                        height: 170
+                
+                GridLayout:
+                    canvas.before:
+                        Color:
+                            rgba:(1,1,1,0.3)
+                        RoundedRectangle:
+                            radius:[20]
+                            size: self.size
+                            pos: self.pos
+                    rows:1
+                    cols:2
+                    size_hint: (0.8, None)
+                    height:250
+                    pos_hint: {'x': 0.1, 'y' :0}
+                    padding: ('50dp', '50dp', '50dp', '50dp')
+                    BoxLayout:
+                        orientation: 'vertical'
+                        Label:
+                            text:'Pothole Detection & Distance Calculation'
+                            font_size: 20
+                            font_name: root.font
+                            text_size: self.size
+                            valign: 'top'
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 50
+                        Label:
+                            text:'We have used YOLACT model to detect potholes which we have elaborated above. After detecting the pothole, we classify them into passable or non-passable potholes and then calculate the distance between the pothole and the car by using inverse perspective transformation which will help us in making speed adjustments.'
+                            text_size: self.size
+                            font_name: root.font
+                            font_size: 12
+                            valign: 'top'
+                            halign: 'left'
+                            size_hint: 1, None
+                            height: 140
+                        
+                    Image:
+                        # size_hint: (0.8, 0.2) 
+                        source:'images/distanc.png'
+                        size_hint: 1, None
+                        height: 170
 
 
 
-# Custom Widtget
+
+<VideoMode>:
+    name: 'video_mode-screen'
+    font: 'fonts\BRLNSDB'
+    RelativeLayout:
+        canvas.before:
+            Rectangle:
+                size: self.size
+                pos: self.pos
+                source: 'images/background.png'
+        
+
+        RelativeLayout:
+            AnchorLayout:
+                anchor_x: 'left'
+                anchor_y: 'top'
+                BackButton4:
+                    markup: True
+                    on_press: root.back()
+                    text:'%s   Back' % icon('chevron-left', 16 , 'ffffff')
+                    font_size: 16
+                    color: (1,1,1,1)
+                    size_hint: None, None 
+                    size: '150dp','50dp'
+                    radius: [0, 30, 30, 0]
+            
+            GridLayout:
+                rows:3
+                cols:3
+                pos_hint: {'center_y': 0.4}
+                padding: ('40dp', '40dp', '40dp', '40dp')
+                StackLayout:
+                    orientation: 'lr-tb'
+                    Button:
+                        id: _real_one
+                        canvas.before:
+                            RoundedRectangle:
+                                pos:self.pos
+                                size: self.size
+                                source: 'images/demo-1.JPG'
+                                radius: [20]
+                        size_hint: None,None
+                        size: '250dp', '150dp'
+                        background_color:(0,0,0,0)
+                        on_press: root.open_window('real-demo-1.avi', self)
+                StackLayout:
+                    orientation: 'lr-tb'
+                    Button:
+                        id: _real_two
+                        canvas.before:
+                            RoundedRectangle:
+                                pos:self.pos
+                                size: self.size
+                                source: 'images/demo-2.JPG'
+                                radius: [20]
+                        size_hint: None,None
+                        size: '250dp', '150dp'
+                        background_color:(0,0,0,0)
+                        on_press: root.open_window('real-demo-2.mp4', self)
+                StackLayout:
+                    orientation: 'lr-tb'
+                    Button:
+                        id: _carla
+                        canvas.before:
+                            RoundedRectangle:
+                                pos:self.pos
+                                size: self.size
+                                source: 'images/demo-3.JPG'
+                                radius: [20]
+                        size_hint: None,None
+                        size: '250dp', '150dp'
+                        background_color:(0,0,0,0)
+                        on_press: root.open_window('carla-demo.avi', self)
+                StackLayout:
+                    orientation: 'lr-tb'
+                    Button:
+                        id: _carla
+                        canvas.before:
+                            RoundedRectangle:
+                                pos:self.pos
+                                size: self.size
+                                source: 'images/demo-3.JPG'
+                                radius: [20]
+                        size_hint: None,None
+                        size: '250dp', '150dp'
+                        background_color:(0,0,0,0)
+                        on_press: root.open_window('carla-demo.avi', self)
+
+                StackLayout:
+                    orientation: 'lr-tb'
+                    Button:
+                        id: _carla
+                        canvas.before:
+                            RoundedRectangle:
+                                pos:self.pos
+                                size: self.size
+                                source: 'images/demo-3.JPG'
+                                radius: [20]
+                        size_hint: None,None
+                        size: '250dp', '150dp'
+                        background_color:(0,0,0,0)
+                        on_press: root.open_window('carla-demo.avi', self)
+
+                StackLayout:
+                    orientation: 'lr-tb'
+                    Button:
+                        id: _carla
+                        canvas.before:
+                            RoundedRectangle:
+                                pos:self.pos
+                                size: self.size
+                                source: 'images/demo-3.JPG'
+                                radius: [20]
+                        size_hint: None,None
+                        size: '250dp', '150dp'
+                        background_color:(0,0,0,0)
+                        on_press: root.open_window('carla-demo.avi', self)
+
+
+            
+         
+
+# # Custom Widtget
 <StartButton@Button>
     background_color: (0,0,0,0)
     radius: [0,0,0,0]
@@ -358,6 +723,26 @@
             radius: self.radius
 
 <BackButton2@Button>
+    background_color: (0,0,0,0)
+    radius: [0,0,0,0]
+    canvas.before:
+        Color: 
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.radius
+<BackButton3@Button>
+    background_color: (0,0,0,0)
+    radius: [0,0,0,0]
+    canvas.before:
+        Color: 
+            rgba: (0,0,0,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.radius
+<BackButton4@Button>
     background_color: (0,0,0,0)
     radius: [0,0,0,0]
     canvas.before:
